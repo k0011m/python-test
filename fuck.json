@@ -1,0 +1,11 @@
+{
+    "1":{
+        "friend_name":"friend_1",
+        "port":8001
+    },
+
+    "2":{
+        "friend_name":"friend_2",
+        "port":8002
+    }
+}
