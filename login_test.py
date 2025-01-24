@@ -124,8 +124,7 @@ def Home(username,port):
 #                if do == '3':
                 if do == '4':
                         start()
-
-                        
+ 
 def login(name,port):
         os.system('cls')
         print('Hello! ' + name)
