@@ -90,7 +90,6 @@ def message_home(username):
                         with open(friend_txt_file,'w') as friend_list_file_past_load:
                                 json.dump(friend_list_past_load,friend_txt_file)
 
-
 #ホーム画面
 def Home(username,port):
         while True:
