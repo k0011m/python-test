@@ -7,14 +7,14 @@ display = pygame.display.set_mode((400,400))
 pygame.display.set_caption("ゲーム")
 
 #画像読み込み
-maru_skin = pygame.image.load("ゲーム\maru.png")
-batu_skin = pygame.image.load("ゲーム\\batu.png")
-local_skin = pygame.image.load("ゲーム\local.png")
-cp_skin = pygame.image.load("ゲーム\cp.png")
-retry_skin = pygame.image.load("ゲーム\\retry.png")
-space_skin = pygame.image.load("ゲーム\space.png")
-maru_win_skin = pygame.image.load("ゲーム\maru_win.png")
-batu_win_skin = pygame.image.load("ゲーム\\batu_win.png")
+maru_skin = pygame.image.load("ゲーム/maru.png")
+batu_skin = pygame.image.load("ゲーム/batu.png")
+local_skin = pygame.image.load("ゲーム/local.png")
+cp_skin = pygame.image.load("ゲーム/cp.png")
+retry_skin = pygame.image.load("ゲーム/retry.png")
+space_skin = pygame.image.load("ゲーム/space.png")
+maru_win_skin = pygame.image.load("ゲーム/maru_win.png")
+batu_win_skin = pygame.image.load("ゲーム/batu_win.png")
 
 
 #リサイズ
@@ -39,8 +39,8 @@ def win_check(attack, pos):
     if [attack, pos] in marubatu_pos_list:
         return 1
     
-def win_check_pos(attack, pos):
-    global marubatu_pos_list
+#def win_check_pos(attack, pos):
+#    global marubatu_pos_list
     #if pos == 21 or pos == 22 or pos == 23:
         
 
@@ -49,8 +49,8 @@ def win_check_pos(attack, pos):
 #勝ちの判定
 def win(attack, pos):
     global marubatu_pos_list
-    if win_check_pos(attack, pos) == 1:
-        print('win')
+#    if win_check_pos(attack, pos) == 1:
+#        print('win')
     
 
 
