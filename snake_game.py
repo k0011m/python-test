@@ -29,16 +29,22 @@ class snake_move:
 
 class apple:
 
-    def __init__(self, snake_x, snake_y):
-        apple_x = random.randint(0, map_size*2 - 1)
-        apple_y = random.randint(0, map_size*2 - 1)
+    def __init__(self, x, y):
+        self.apple_x = x
+        self.apple_y = y
+        
+    def get_apple_pos(self):
+        return self.apple_x, self.apple_y
+    
+    def random_apple(self):
+        self.apple_x = random.randint(0, map_size*2 - 1)
+        self.apple_y = random.randint(0, map_size*2 - 1)
         while True:
-            if not (apple_x, apple_y) == (snake_x, snake_y):
-                print(apple_x, apple_y)
+            if not (self.apple_x, self.apple_y) == (snake_x, snake_y):
                 break
             else:
-                apple_x = random.randint(0, map_size*2 - 1)
-                apple_y = random.randint(0, map_size*2 - 1)
+                self.apple_x = random.randint(0, map_size*2 - 1)
+                self.apple_y = random.randint(0, map_size*2 - 1)
 
 
 # マップ作成
@@ -50,26 +56,45 @@ class map:
         #print('\n'.join(self.map_list))
 
     # マップの更新
-    def map_update(self, x, y):
-        #y座標の文字列を取得
+    def map_update(self, x, y, apple_x_map, apple_y_map):
+        global score
+        #マップのリストを入手
         self.map_list = list(self.map_list_reset)
-        try:
+        if (x,y) == (apple_x_map, apple_y_map):
+            score += 1
+            apple_pos.random_apple()
+        #ヘビのy座標とリンゴのy座標が同じときの文字列を取得
+        if y == apple_y_map:
             x_string = self.map_list[int(y)]
-        except IndexError:
-            print('Game Over!')
-            exit()
-        x_string = list(x_string)
-        #x座標の文字列を更新
-        try:
+            x_string = list(x_string)
             x_string[int(x)] = skin
-        except IndexError:
-            print('Game Over!')
-            exit()
-        x_string = ''.join(x_string)
-        self.map_list[int(y)] = x_string
+            x_string[int(apple_x_map)] = '🍎'
+            x_string = ''.join(x_string)
+            self.map_list[int(y)] = x_string
+        else:
+            #ヘビのy座標とリンゴのy座標が違うときの文字列を取得
+            try:
+                x_string = self.map_list[int(y)]
+                apple_x_string = self.map_list[int(apple_y)]
+            except IndexError:
+                print(f'Game Over!\nscore:{score}')
+                exit()
+            x_string = list(x_string)
+            apple_x_string = list(apple_x_string)
+        #x座標の文字列を更新
+            try:
+                x_string[int(x)] = skin
+                apple_x_string[int(apple_x_map)] = '🍎'
+            except IndexError:
+                print(f'Game Over!\nscore:{score}')
+                exit()
+            x_string = ''.join(x_string)
+            apple_x_string = ''.join(apple_x_string)
+            self.map_list[int(y)] = x_string
+            self.map_list[int(apple_y_map)] = apple_x_string
         self.map_list = '\n'.join(self.map_list)
         #マップを文字列にして、表示
-        print(self.map_list,f'\n\n\n\n{x},{y}')
+        print(self.map_list,'\n\n\n\n')
         #マップの変数をリセット
         self.map_list = self.map_list_reset
 
@@ -85,7 +110,7 @@ def character():
 
 #main
 if __name__ == "__main__":
-
+    score = 0
     map_size = int(input('Press map size(r):'))
     skin = character()
 
@@ -95,9 +120,9 @@ if __name__ == "__main__":
     snake_dir = 'right'
 
     #map_var.map_update(5,4)
-
+    apple_pos = apple(3,3)
     while True:
-        time.sleep(0.5)
+        time.sleep(0.2)
         if keyboard.is_pressed('w'):
             if not snake_dir == 'down':
                 snake_dir = 'up'
@@ -113,8 +138,8 @@ if __name__ == "__main__":
         snake_pos.move(snake_dir)
         snake_x, snake_y = snake_pos.get_pos()
         if snake_x > map_size*2 or snake_y > map_size*2 or snake_x < 0 or snake_y < 0:
-            print('Game Over!')
+            print(f'Game Over!\nscore:{score}')
             break
-        apple_pos = apple(snake_x, snake_y)
-        map_var.map_update(snake_x, snake_y)
+        apple_x, apple_y = apple_pos.get_apple_pos()
+        map_var.map_update(snake_x, snake_y,apple_x, apple_y)
         #map(map_size)
