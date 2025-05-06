@@ -62,7 +62,7 @@ class map:
         self.map_list = list(self.map_list_reset)
         if (x,y) == (apple_x_map, apple_y_map):
             score += 1
-            poison_apple.append(apple_x_map,apple_y_map)
+            poison_apple.append((apple_x_map,apple_y_map))
             apple_pos.random_apple()
         #ヘビのy座標とリンゴのy座標が同じときの文字列を取得
         if y == apple_y_map:
